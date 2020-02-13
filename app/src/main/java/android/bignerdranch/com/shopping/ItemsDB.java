@@ -1,11 +1,24 @@
 package android.bignerdranch.com.shopping;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemsDB {
     private List<Item> ItemsDB;
-    public ItemsDB() { ItemsDB= new ArrayList<>(); }
+
+    private static ItemsDB sItemsDB;
+    public static ItemsDB get(Context context) { if (sItemsDB == null) {
+        sItemsDB = new ItemsDB(context);
+        sItemsDB.fillItemsDB();
+    }
+        return sItemsDB;
+    }
+    private ItemsDB(Context context) {
+        ItemsDB= new ArrayList<>();
+    }
+
     public String listItems() {
         String r= "";
         for (int i= 0; i<ItemsDB.size(); i++) {
@@ -23,6 +36,11 @@ public class ItemsDB {
 
     public void addItem(Item item) {
         ItemsDB.add(item);
+    }
 
+    public void deleteLastItem() {
+        if (ItemsDB.size()>0) {
+            ItemsDB.remove(ItemsDB.size() - 1);
+        }
     }
 }
