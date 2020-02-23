@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#767272"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+<!--    android:gravity="buttom"-->
+<!--    android:orientation="horizontal">-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/input_where"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Where?"></EditText>
+
+        <EditText
+            android:id="@+id/input_what"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="What item?"></EditText>
+        <Button
+            android:id="@+id/button_add_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add new item" />
+    </LinearLayout>
+
+</LinearLayout>

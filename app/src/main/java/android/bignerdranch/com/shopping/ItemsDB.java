@@ -6,10 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemsDB {
+//    public class ItemsDB extends Observable {
     private List<Item> ItemsDB;
 
     private static ItemsDB sItemsDB;
-    public static ItemsDB get(Context context) { if (sItemsDB == null) {
+    public static synchronized ItemsDB get(Context context) { if (sItemsDB == null) {
         sItemsDB = new ItemsDB(context);
         sItemsDB.fillItemsDB();
     }
@@ -19,7 +20,7 @@ public class ItemsDB {
         ItemsDB= new ArrayList<>();
     }
 
-    public String listItems() {
+    public synchronized String listItems() {
         String r= "";
         for (int i= 0; i<ItemsDB.size(); i++) {
             r= r+"\n Buy "+ItemsDB.get(i).toString();
@@ -32,15 +33,25 @@ public class ItemsDB {
         ItemsDB.add(new Item("milk", "Netto"));
         ItemsDB.add(new Item("bread", "bakery"));
         ItemsDB.add(new Item("butter", "Irma"));
+//        this.setChanged();
+//        notifyObservers();
     }
 
-    public void addItem(Item item) {
+    public synchronized void  addItem(Item item) {
         ItemsDB.add(item);
+//        this.setChanged();
+//        notifyObservers();
     }
 
-    public void deleteLastItem() {
+    public synchronized void deleteLastItem() {
         if (ItemsDB.size()>0) {
             ItemsDB.remove(ItemsDB.size() - 1);
+//        this.setChanged();
+//        notifyObservers();
         }
+    }
+
+    public int getSize() {
+        return ItemsDB.size();
     }
 }

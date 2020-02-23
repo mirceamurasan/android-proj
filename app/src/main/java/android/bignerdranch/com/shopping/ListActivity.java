@@ -1,47 +1,33 @@
 package android.bignerdranch.com.shopping;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
-import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
-public class ListActivity extends AppCompatActivity {
-
-    private static ItemsDB itemsDB;
-    private TextView listItems;
+public class ListActivity extends AppCompatActivity implements ListFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        Button deleteButton = (Button) findViewById(R.id.delete_button);
-        Button backButton = (Button) findViewById(R.id.back_button);
 
-        itemsDB= ItemsDB.get(this);
-        listItems= (TextView) findViewById(R.id.list_textview_id);
-        if (!itemsDB.listItems().isEmpty()) {
-            listItems.setText("Shopping List:" + itemsDB.listItems());
+        FragmentManager fm= getSupportFragmentManager();
+        Fragment fragmentList= fm.findFragmentById(R.id.container_list_portrait);
+        if (fragmentList == null) {
+            fragmentList= new ListFragment();
+            fm.beginTransaction()
+                    .add(R.id.container_list_portrait, fragmentList)
+                    .commit();
         }
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                itemsDB.deleteLastItem();
-                finish();
-                startActivity(getIntent());
-            }
-        });
+    }
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ListActivity.this, ShoppingActivity.class);
-                startActivity(intent);
-            }
-        });
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 
