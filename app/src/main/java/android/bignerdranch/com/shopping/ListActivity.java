@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentManager;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.TextView;
 
 public class ListActivity extends AppCompatActivity implements ListFragment.OnFragmentInteractionListener {
 
@@ -16,11 +15,11 @@ public class ListActivity extends AppCompatActivity implements ListFragment.OnFr
         setContentView(R.layout.activity_list);
 
         FragmentManager fm= getSupportFragmentManager();
-        Fragment fragmentList= fm.findFragmentById(R.id.container_list_portrait);
+        Fragment fragmentList= fm.findFragmentById(R.id.container_list);
         if (fragmentList == null) {
             fragmentList= new ListFragment();
             fm.beginTransaction()
-                    .add(R.id.container_list_portrait, fragmentList)
+                    .add(R.id.container_list, fragmentList)
                     .commit();
         }
 

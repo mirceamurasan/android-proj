@@ -9,8 +9,9 @@
     >
 
     <FrameLayout
-        android:id="@+id/container_list_portrait"
+        android:id="@+id/container_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"/>
 
 </LinearLayout>

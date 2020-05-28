@@ -13,22 +13,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Observable;
+import java.util.Observer;
 
-public class ListFragment extends Fragment {
-//    public class UIFragment extends Fragment implements Observer {
+
+public class ListFragment extends Fragment implements Observer {
 
     private OnFragmentInteractionListener mListener;
 
     private static ItemsDB itemsDB;
+
     private TextView listItems;
     private Button deleteButton, backButton;
-
-    public ListFragment() {
-    }
-
-//    public void update() {
-//        listThings.setText("Shopping List"+itemsDB.listItems());
-//    }
+    private TextView listThings;
 
 
     @Override
@@ -43,11 +40,13 @@ public class ListFragment extends Fragment {
         deleteButton = v.findViewById(R.id.delete_button);
         backButton = v.findViewById(R.id.back_button);
 
+
         itemsDB= ItemsDB.get(getActivity());
+        itemsDB.addObserver(this);
+        listThings =  v.findViewById(R.id.list_textview_id);
         listItems = v.findViewById(R.id.list_textview_id);
         if (!itemsDB.listItems().isEmpty()) {
             listItems.setText("Shopping List:" + itemsDB.listItems());
-
         }
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -67,20 +66,8 @@ public class ListFragment extends Fragment {
             }
         });
 
-//        return inflater.inflate(R.layout.fragment_list, container, false);
         return v;
 
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override
@@ -89,7 +76,14 @@ public class ListFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void update(Observable observable, Object o) {
+        listThings.setText("Shopping List"+itemsDB.listItems());
+
+    }
+
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
+
 }

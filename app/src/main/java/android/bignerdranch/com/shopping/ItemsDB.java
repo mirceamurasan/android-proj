@@ -4,9 +4,10 @@ import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
-public class ItemsDB {
-//    public class ItemsDB extends Observable {
+
+public class ItemsDB extends Observable {
     private List<Item> ItemsDB;
 
     private static ItemsDB sItemsDB;
@@ -33,21 +34,21 @@ public class ItemsDB {
         ItemsDB.add(new Item("milk", "Netto"));
         ItemsDB.add(new Item("bread", "bakery"));
         ItemsDB.add(new Item("butter", "Irma"));
-//        this.setChanged();
-//        notifyObservers();
+        this.setChanged();
+        notifyObservers();
     }
 
     public synchronized void  addItem(Item item) {
         ItemsDB.add(item);
-//        this.setChanged();
-//        notifyObservers();
+        this.setChanged();
+        notifyObservers();
     }
 
     public synchronized void deleteLastItem() {
         if (ItemsDB.size()>0) {
             ItemsDB.remove(ItemsDB.size() - 1);
-//        this.setChanged();
-//        notifyObservers();
+        this.setChanged();
+        notifyObservers();
         }
     }
 
