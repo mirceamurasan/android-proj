@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +16,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+
+import static androidx.recyclerview.widget.RecyclerView.*;
 
 
 public class ListFragment extends Fragment implements Observer {
@@ -23,9 +29,9 @@ public class ListFragment extends Fragment implements Observer {
 
     private static ItemsDB itemsDB;
 
-    private TextView listItems;
     private Button deleteButton, backButton;
-    private TextView listThings;
+    private RecyclerView recycleList;
+    private ItemAdapter mAdapter;
 
 
     @Override
@@ -40,14 +46,14 @@ public class ListFragment extends Fragment implements Observer {
         deleteButton = v.findViewById(R.id.delete_button);
         backButton = v.findViewById(R.id.back_button);
 
-
         itemsDB= ItemsDB.get(getActivity());
         itemsDB.addObserver(this);
-        listThings =  v.findViewById(R.id.list_textview_id);
-        listItems = v.findViewById(R.id.list_textview_id);
-        if (!itemsDB.listItems().isEmpty()) {
-            listItems.setText("Shopping List:" + itemsDB.listItems());
-        }
+
+        recycleList = v.findViewById(R.id.shopping_recycler_view);   // I HAVE TO CREATE THIS item_recycler_view probably in fragment_list
+
+//        mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recycleList.setLayoutManager(new LinearLayoutManager(getActivity()));
+
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,8 +72,63 @@ public class ListFragment extends Fragment implements Observer {
             }
         });
 
+//        ItemsDB itemsDB = ItemsDB.get(getActivity());
+
+        updateUI();
         return v;
 
+    }
+    private class ShoppingHolder extends ViewHolder {
+
+        private TextView mTitleTextView;
+        private TextView mDateTextView;
+//        private Item mItem;
+
+
+        public ShoppingHolder(LayoutInflater inflater, ViewGroup parent) {
+
+            super(inflater.inflate(R.layout.list_item_shopping, parent, false)); // create this list_item_crime; check book
+//            super(inflater.inflate(R.layout.list_item_crime, parent, false));
+
+            mTitleTextView = (TextView) itemView.findViewById(R.id.crime_title);
+            mDateTextView = (TextView) itemView.findViewById(R.id.crime_date);
+        }
+
+        public void bind(Item item) {
+//            mItem = item;
+            mTitleTextView.setText(item.getWhat());
+            mDateTextView.setText(item.getWhere());
+
+        }
+
+    }
+
+    private class ItemAdapter extends RecyclerView.Adapter<ShoppingHolder> {
+        private List<Item> mCrimes;
+
+        public ItemAdapter(List<Item> crimes) {
+            mCrimes = crimes;
+        }
+
+
+        @NonNull
+        @Override
+        public ShoppingHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+            return new ShoppingHolder(layoutInflater, parent);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ShoppingHolder holder, int position) {
+//            Crime crime = mCrimes.get(position);
+            Item item= mCrimes.get(position);
+            holder.bind(item);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mCrimes.size();
+        }
     }
 
     @Override
@@ -78,12 +139,20 @@ public class ListFragment extends Fragment implements Observer {
 
     @Override
     public void update(Observable observable, Object o) {
-        listThings.setText("Shopping List"+itemsDB.listItems());
-
+//        listThings.setText("Shopping List"+itemsDB.listItems());
+        updateUI();
     }
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void updateUI() {
+        ItemsDB itemsDB = ItemsDB.get(getActivity());
+        List<Item> items = itemsDB.getItemsDB();;
+        mAdapter = new ItemAdapter(items);
+        recycleList.setAdapter(mAdapter);
+
     }
 
 }

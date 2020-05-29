@@ -8,7 +8,8 @@ import java.util.Observable;
 
 
 public class ItemsDB extends Observable {
-    private List<Item> ItemsDB;
+    private List<Item> itemsDB;
+//    private mItemsDB = new ArrayList<>();
 
     private static ItemsDB sItemsDB;
     public static synchronized ItemsDB get(Context context) { if (sItemsDB == null) {
@@ -18,41 +19,45 @@ public class ItemsDB extends Observable {
         return sItemsDB;
     }
     private ItemsDB(Context context) {
-        ItemsDB= new ArrayList<>();
+        itemsDB= new ArrayList<>();
     }
 
     public synchronized String listItems() {
         String r= "";
-        for (int i= 0; i<ItemsDB.size(); i++) {
-            r= r+"\n Buy "+ItemsDB.get(i).toString();
+        for (int i= 0; i<itemsDB.size(); i++) {
+            r= r+"\n Buy "+itemsDB.get(i).toString();
         }
         return r;
     }
     public void fillItemsDB() {
-        ItemsDB.add(new Item("coffee", "Irma"));
-        ItemsDB.add(new Item("carrots", "Netto"));
-        ItemsDB.add(new Item("milk", "Netto"));
-        ItemsDB.add(new Item("bread", "bakery"));
-        ItemsDB.add(new Item("butter", "Irma"));
+        itemsDB.add(new Item("coffee", "Irma"));
+        itemsDB.add(new Item("carrots", "Netto"));
+        itemsDB.add(new Item("milk", "Netto"));
+        itemsDB.add(new Item("bread", "bakery"));
+        itemsDB.add(new Item("butter", "Irma"));
         this.setChanged();
         notifyObservers();
     }
 
     public synchronized void  addItem(Item item) {
-        ItemsDB.add(item);
+        itemsDB.add(item);
         this.setChanged();
         notifyObservers();
     }
 
     public synchronized void deleteLastItem() {
-        if (ItemsDB.size()>0) {
-            ItemsDB.remove(ItemsDB.size() - 1);
+        if (itemsDB.size()>0) {
+            itemsDB.remove(itemsDB.size() - 1);
         this.setChanged();
         notifyObservers();
         }
     }
 
     public int getSize() {
-        return ItemsDB.size();
+        return itemsDB.size();
+    }
+
+    public synchronized List<Item> getItemsDB() {
+        return itemsDB;
     }
 }
