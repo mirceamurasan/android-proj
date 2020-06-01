@@ -104,10 +104,10 @@ public class ListFragment extends Fragment implements Observer {
     }
 
     private class ItemAdapter extends RecyclerView.Adapter<ShoppingHolder> {
-        private List<Item> mCrimes;
+        private List<Item> mItems;
 
         public ItemAdapter(List<Item> crimes) {
-            mCrimes = crimes;
+            mItems = crimes;
         }
 
 
@@ -121,13 +121,17 @@ public class ListFragment extends Fragment implements Observer {
         @Override
         public void onBindViewHolder(@NonNull ShoppingHolder holder, int position) {
 //            Crime crime = mCrimes.get(position);
-            Item item= mCrimes.get(position);
+            Item item= mItems.get(position);
             holder.bind(item);
         }
 
         @Override
         public int getItemCount() {
-            return mCrimes.size();
+            return mItems.size();
+        }
+
+        public void setItems(List<Item> items) {
+            mItems = items;
         }
     }
 
@@ -148,10 +152,29 @@ public class ListFragment extends Fragment implements Observer {
     }
 
     private void updateUI() {
-        ItemsDB itemsDB = ItemsDB.get(getActivity());
-        List<Item> items = itemsDB.getItemsDB();;
-        mAdapter = new ItemAdapter(items);
-        recycleList.setAdapter(mAdapter);
+        // suggested in the course
+//        mItemAdapter.notifyDataSetChanged();
+
+//        ItemsDB itemsDB = ItemsDB.get(getActivity());
+
+
+
+
+//        List<Item> items = itemsDB.getItemsDB();
+        List<Item> items = itemsDB.getItems();
+
+
+
+        //        mAdapter = new ItemAdapter(items);
+//        recycleList.setAdapter(mAdapter);
+
+        if (mAdapter == null) {
+            mAdapter = new ItemAdapter(items);
+            recycleList.setAdapter(mAdapter);
+        } else {
+            mAdapter.setItems(items);
+            mAdapter.notifyDataSetChanged();
+        }
 
     }
 
