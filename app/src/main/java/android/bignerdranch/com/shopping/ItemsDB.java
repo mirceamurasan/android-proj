@@ -15,13 +15,13 @@ import java.util.Observable;
 
 public class ItemsDB extends Observable {
 
-    private List<Item> itemsDB;
+//    private List<Item> itemsDB;
     private static SQLiteDatabase mDatabase;
     private static ItemsDB sItemsDB;
     private Context mContext;
 
 
-    public static synchronized ItemsDB get(Context context) { if (sItemsDB == null) {
+    public static ItemsDB get(Context context) { if (sItemsDB == null) {
         sItemsDB = new ItemsDB(context);
         sItemsDB.fillItemsDB();
     }
@@ -32,22 +32,22 @@ public class ItemsDB extends Observable {
         mContext = context.getApplicationContext();
         mDatabase = new ItemBaseHelper(mContext)
                 .getWritableDatabase();
-        itemsDB= new ArrayList<>();
+//        itemsDB= new ArrayList<>();
     }
 
-    public synchronized String listItems() {
-        String r= "";
-        for (int i= 0; i<itemsDB.size(); i++) {
-            r= r+"\n Buy "+itemsDB.get(i).toString();
-        }
-        return r;
-    }
+//    public String listItems() {
+//        String r= "";
+//        for (int i= 0; i<itemsDB.size(); i++) {
+//            r= r+"\n Buy "+itemsDB.get(i).toString();
+//        }
+//        return r;
+//    }
     public void fillItemsDB() {
-        itemsDB.add(new Item("coffee", "Irma"));
-        itemsDB.add(new Item("carrots", "Netto"));
-        itemsDB.add(new Item("milk", "Netto"));
-        itemsDB.add(new Item("bread", "bakery"));
-        itemsDB.add(new Item("butter", "Irma"));
+//        itemsDB.add(new Item("coffee", "Irma"));
+//        itemsDB.add(new Item("carrots", "Netto"));
+//        itemsDB.add(new Item("milk", "Netto"));
+//        itemsDB.add(new Item("bread", "bakery"));
+//        itemsDB.add(new Item("butter", "Irma"));
 
         addItem(new Item("coffee", "Irma"));
         addItem(new Item("carrots", "Netto"));
@@ -57,7 +57,7 @@ public class ItemsDB extends Observable {
         notifyObservers();
     }
 
-    public synchronized void  addItem(Item item) {
+    public void  addItem(Item item) {
 //        itemsDB.add(item);
         ContentValues values = getContentValues(item);
         mDatabase.insert(ItemDbSchema.ItemsTable.NAME, null, values);
@@ -80,7 +80,7 @@ public class ItemsDB extends Observable {
     }
 
 //    we need item.getId().toString()
-    public synchronized void deleteItemFromDb(String id) {
+    public void deleteItemFromDb(String id) {
         mDatabase.delete(ItemDbSchema.ItemsTable.NAME, ItemDbSchema.ItemsTable.Cols.UUID + " = ?",
                 new String[] { id });
         this.setChanged();
@@ -88,13 +88,13 @@ public class ItemsDB extends Observable {
     }
 
 
-    public int getSize() {
-        return itemsDB.size();
-    }
+//    public int getSize() {
+//        return itemsDB.size();
+//    }
 
-    public synchronized List<Item> getItemsDB() {
-        return itemsDB;
-    }
+//    public List<Item> getItemsDB() {
+//        return itemsDB;
+//    }
 
     private static ContentValues getContentValues(Item item) {
         ContentValues values = new ContentValues();
@@ -125,7 +125,7 @@ public class ItemsDB extends Observable {
         return new ItemCursorWrapper(cursor);
     }
 
-    public synchronized ArrayList<Item> getItems() {
+    public ArrayList<Item> getItems() {
         ArrayList<Item> items= new ArrayList<>();
         ItemCursorWrapper cursor= queryItems(null, null);
         cursor.moveToFirst();
