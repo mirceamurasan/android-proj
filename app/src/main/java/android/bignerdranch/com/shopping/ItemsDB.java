@@ -52,6 +52,10 @@ public class ItemsDB extends Observable {
         addItem(new Item("coffee", "Irma"));
         addItem(new Item("carrots", "Netto"));
         addItem(new Item("bread", "bakery"));
+        addItem(new Item("butter", "Irma"));
+        addItem(new Item("milk", "Netto"));
+        addItem(new Item("pretzel", "bakery"));
+
 
         this.setChanged();
         notifyObservers();
@@ -123,6 +127,24 @@ public class ItemsDB extends Observable {
         );
 
         return new ItemCursorWrapper(cursor);
+    }
+
+    public ArrayList<Item> getItemsByShop(String param) {
+        ArrayList<Item> items= new ArrayList<>();
+        ItemCursorWrapper cursor = queryItems(
+                ItemDbSchema.ItemsTable.Cols.WHERE_TO + " = ?",
+                new String[] { param } // here should be param
+        );
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            items.add(cursor.getItem());
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return items;
+
+//        return null;
     }
 
     public ArrayList<Item> getItems() {

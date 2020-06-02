@@ -1,6 +1,9 @@
 package android.bignerdranch.com.shopping;
 
+import android.app.AlertDialog;
+import android.bignerdranch.com.shopping.database.ItemDbSchema;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -8,6 +11,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,7 +21,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.List;
@@ -33,7 +39,7 @@ public class ListFragment extends Fragment implements Observer {
 
     private static ItemsDB itemsDB;
 
-    private Button deleteButton, backButton;
+    private Button popupButton, backButton;
     private RecyclerView recycleList;
     private ItemAdapter mAdapter;
 
@@ -44,14 +50,65 @@ public class ListFragment extends Fragment implements Observer {
         setHasOptionsMenu(true);
     }
 
+    public void openDialog() {
+        FragmentManager manager = getFragmentManager();
+        ShopDialog dialog = new ShopDialog();
+        dialog.show(manager, "dialog string");
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v= inflater.inflate(R.layout.fragment_list, container, false);
-        deleteButton = v.findViewById(R.id.delete_button);
+//        deleteButton = v.findViewById(R.id.delete_button);
         backButton = v.findViewById(R.id.back_button);
+        popupButton = v.findViewById(R.id.select_shop_button);
 
-        itemsDB= ItemsDB.get(getActivity());
+        popupButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                openDialog();
+
+
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
+                View mView = getLayoutInflater().inflate(R.layout.dialog_spinner, null);
+
+                final Spinner mSpinner = (Spinner) mView.findViewById(R.id.my_spinner);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                        getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.numbers));
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                mSpinner.setAdapter(adapter);
+
+
+
+                mBuilder.setTitle("Select shop")
+                        .setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                updateUI(itemsDB.getItemsByShop(mSpinner.getSelectedItem().toString()));
+
+//                                itemsDB.queryItems(
+//                                        ItemDbSchema.ItemsTable.Cols.WHERE_TO + " = ?",
+//                                        new String[] { "Netto" }
+//                                );
+//                    if (!mSpinner.getSelectedItem().toString().equalsIgnoreCase("")){
+////                        Toast.makeText()
+//                    }
+
+                            }
+                        });
+
+                mBuilder.setView(mView);
+
+                AlertDialog dialog = mBuilder.create();
+                dialog.show();
+
+            }
+        });
+
+                itemsDB= ItemsDB.get(getActivity());
         itemsDB.addObserver(this);
 
         recycleList = v.findViewById(R.id.shopping_recycler_view);   // I HAVE TO CREATE THIS item_recycler_view probably in fragment_list
@@ -60,14 +117,14 @@ public class ListFragment extends Fragment implements Observer {
         recycleList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = getActivity().getIntent();
-                itemsDB.deleteLastItem();
-                startActivity(intent);
-            }
-        });
+//        deleteButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = getActivity().getIntent();
+//                itemsDB.deleteLastItem();
+//                startActivity(intent);
+//            }
+//        });
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +136,7 @@ public class ListFragment extends Fragment implements Observer {
 
 //        ItemsDB itemsDB = ItemsDB.get(getActivity());
 
-        updateUI();
+        updateUI(null);
         return v;
 
     }
@@ -149,14 +206,14 @@ public class ListFragment extends Fragment implements Observer {
     @Override
     public void update(Observable observable, Object o) {
 //        listThings.setText("Shopping List"+itemsDB.listItems());
-        updateUI();
+        updateUI(null);
     }
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
 
-    private void updateUI() {
+    private void updateUI(List<Item> mItems) {
         // suggested in the course
 //        mItemAdapter.notifyDataSetChanged();
 
@@ -164,9 +221,13 @@ public class ListFragment extends Fragment implements Observer {
 
 
 
-
+        List<Item> items = null;
 //        List<Item> items = itemsDB.getItemsDB();
-        List<Item> items = itemsDB.getItems();
+        if (mItems == null ) {
+            items = itemsDB.getItems();
+        } else {
+            items = mItems;
+        }
 
 
 

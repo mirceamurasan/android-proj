@@ -13,32 +13,45 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/list_textview_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nothing here for now"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+<!--        <TextView-->
+<!--            android:id="@+id/list_textview_id"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Nothing here for now"-->
+<!--            android:gravity="center"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+<!--        <Button-->
+<!--            android:id="@+id/delete_button"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Delete last item" />-->
+
         <Button
-            android:id="@+id/delete_button"
+            android:id="@+id/select_shop_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delete last item" />
+            android:text="Select shop" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/shopping_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
         <Button
             android:id="@+id/back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Go back and add more" />
+            android:text="Add more items" />
+        <Spinner
+            android:id="@+id/my_spinner_from_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </Spinner>
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/shopping_recycler_view"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+
 
 
 

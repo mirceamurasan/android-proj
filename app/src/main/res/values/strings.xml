@@ -7,7 +7,12 @@
 <!--    <string name="new_crime">New Crime</string>-->
     <string name="list_shopping">List</string>
     <string name="shopping_new">New</string>
-<!--    <string name="show_subtitle">Show Subtitle</string>-->
-<!--    <string name="hide_subtitle">Hide Subtitle</string>-->
-<!--    <string name="subtitle_format">%1$d crimes</string>-->
+    <string-array name="numbers">
+<!--        <item>please choose</item>-->
+        <item>Netto</item>
+        <item>Irma</item>
+        <item>bakery</item>
+<!--        <item>Four</item>-->
+<!--        <item>Five</item>-->
+    </string-array>
 </resources>
