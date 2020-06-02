@@ -52,4 +52,5 @@ public class ShoppingActivity extends AppCompatActivity  implements UIFragment.O
 
     }
 
+
 }

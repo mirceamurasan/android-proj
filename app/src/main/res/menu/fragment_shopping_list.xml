@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/list_shopping"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="@string/list_shopping"
+        app:showAsAction="ifRoom|withText"/>
+<!--    In the android:icon attribute, the value @android:drawable/ic_menu_add references a system icon. A-->
+<!--    system icon is one that is found on the device rather than in your project’s resources.-->
+<!--check page 253 for other options of icons-->
+</menu>

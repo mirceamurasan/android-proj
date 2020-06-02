@@ -10,9 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="840f119b-c6b9-4394-a24d-030f8518ec7c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/android/bignerdranch/com/shopping/ItemsDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/android/bignerdranch/com/shopping/ItemsDB.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/android/bignerdranch/com/shopping/ListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/android/bignerdranch/com/shopping/ListFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/android/bignerdranch/com/shopping/ShoppingActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/android/bignerdranch/com/shopping/ShoppingActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/android/bignerdranch/com/shopping/UIFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/android/bignerdranch/com/shopping/UIFragment.java" afterDir="false" />
