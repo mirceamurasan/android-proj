@@ -34,6 +34,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Select shop" />
+        <Button
+            android:id="@+id/go_to_random_meal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Check a random meal" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/shopping_recycler_view"
             android:layout_width="match_parent"
@@ -43,6 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add more items" />
+
         <Spinner
             android:id="@+id/my_spinner_from_fragment"
             android:layout_width="wrap_content"

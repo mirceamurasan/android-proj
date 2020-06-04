@@ -39,7 +39,7 @@ public class ListFragment extends Fragment implements Observer {
 
     private static ItemsDB itemsDB;
 
-    private Button popupButton, backButton;
+    private Button popupButton, backButton, randomMealButton;
     private RecyclerView recycleList;
     private ItemAdapter mAdapter;
 
@@ -64,6 +64,7 @@ public class ListFragment extends Fragment implements Observer {
 //        deleteButton = v.findViewById(R.id.delete_button);
         backButton = v.findViewById(R.id.back_button);
         popupButton = v.findViewById(R.id.select_shop_button);
+        randomMealButton = v.findViewById(R.id.go_to_random_meal);
 
         popupButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -130,6 +131,14 @@ public class ListFragment extends Fragment implements Observer {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ShoppingActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        randomMealButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), RandomMealActivity.class);
                 startActivity(intent);
             }
         });
