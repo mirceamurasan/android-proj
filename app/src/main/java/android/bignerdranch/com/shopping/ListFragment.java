@@ -25,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Observable;
@@ -61,7 +62,6 @@ public class ListFragment extends Fragment implements Observer {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v= inflater.inflate(R.layout.fragment_list, container, false);
-//        deleteButton = v.findViewById(R.id.delete_button);
         backButton = v.findViewById(R.id.back_button);
         popupButton = v.findViewById(R.id.select_shop_button);
         randomMealButton = v.findViewById(R.id.go_to_random_meal);
@@ -89,14 +89,6 @@ public class ListFragment extends Fragment implements Observer {
                             public void onClick(DialogInterface dialogInterface, int i) {
 
                                 updateUI(itemsDB.getItemsByShop(mSpinner.getSelectedItem().toString()));
-
-//                                itemsDB.queryItems(
-//                                        ItemDbSchema.ItemsTable.Cols.WHERE_TO + " = ?",
-//                                        new String[] { "Netto" }
-//                                );
-//                    if (!mSpinner.getSelectedItem().toString().equalsIgnoreCase("")){
-////                        Toast.makeText()
-//                    }
 
                             }
                         });
@@ -149,27 +141,45 @@ public class ListFragment extends Fragment implements Observer {
         return v;
 
     }
-    private class ShoppingHolder extends ViewHolder {
+    private class ShoppingHolder extends ViewHolder implements View.OnClickListener{
 
         private TextView mTitleTextView;
         private TextView mDateTextView;
-//        private Item mItem;
+        private Button deleteButton;
+        private Item mItem;
 
 
         public ShoppingHolder(LayoutInflater inflater, ViewGroup parent) {
-
+//            super(v);
             super(inflater.inflate(R.layout.list_item_shopping, parent, false)); // create this list_item_crime; check book
-//            super(inflater.inflate(R.layout.list_item_crime, parent, false));
 
             mTitleTextView = (TextView) itemView.findViewById(R.id.crime_title);
             mDateTextView = (TextView) itemView.findViewById(R.id.crime_date);
+            deleteButton = itemView.findViewById(R.id.delete_button);
+
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    itemsDB.deleteItemFromDb(mItem.getId().toString());
+                    Toast toast = Toast.makeText(getActivity(), "Item deleted", Toast.LENGTH_SHORT);
+                    toast.show();
+//                    Intent intent = new Intent(getActivity(), ListActivity.class); // i should return the same activity!
+//                    startActivity(intent);
+                }
+            });
         }
 
+
+
         public void bind(Item item) {
-//            mItem = item;
+            mItem = item;
             mTitleTextView.setText(item.getWhat());
             mDateTextView.setText(item.getWhere());
 
+        }
+
+        @Override
+        public void onClick(View view) {
         }
 
     }
@@ -186,7 +196,9 @@ public class ListFragment extends Fragment implements Observer {
         @Override
         public ShoppingHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+//            View v = layoutInflater.inflate(R.layout.list_item_shopping, parent, false);
             return new ShoppingHolder(layoutInflater, parent);
+//            return new ShoppingHolder(v);
         }
 
         @Override

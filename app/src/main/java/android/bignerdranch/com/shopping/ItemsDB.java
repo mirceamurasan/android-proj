@@ -23,7 +23,11 @@ public class ItemsDB extends Observable {
 
     public static ItemsDB get(Context context) { if (sItemsDB == null) {
         sItemsDB = new ItemsDB(context);
-        sItemsDB.fillItemsDB();
+        if (sItemsDB.getItems().isEmpty()) {
+            sItemsDB.fillItemsDB();
+
+        }
+//        sItemsDB.fillItemsDB();
     }
         return sItemsDB;
     }
@@ -32,22 +36,9 @@ public class ItemsDB extends Observable {
         mContext = context.getApplicationContext();
         mDatabase = new ItemBaseHelper(mContext)
                 .getWritableDatabase();
-//        itemsDB= new ArrayList<>();
     }
 
-//    public String listItems() {
-//        String r= "";
-//        for (int i= 0; i<itemsDB.size(); i++) {
-//            r= r+"\n Buy "+itemsDB.get(i).toString();
-//        }
-//        return r;
-//    }
     public void fillItemsDB() {
-//        itemsDB.add(new Item("coffee", "Irma"));
-//        itemsDB.add(new Item("carrots", "Netto"));
-//        itemsDB.add(new Item("milk", "Netto"));
-//        itemsDB.add(new Item("bread", "bakery"));
-//        itemsDB.add(new Item("butter", "Irma"));
 
         addItem(new Item("coffee", "Irma"));
         addItem(new Item("carrots", "Netto"));
@@ -55,6 +46,9 @@ public class ItemsDB extends Observable {
         addItem(new Item("butter", "Irma"));
         addItem(new Item("milk", "Netto"));
         addItem(new Item("pretzel", "bakery"));
+        addItem(new Item("beer", "Netto"));
+        addItem(new Item("soda", "Irma"));
+
 
 
         this.setChanged();
@@ -70,18 +64,7 @@ public class ItemsDB extends Observable {
         notifyObservers();
     }
 
-    public synchronized void deleteLastItem() {
 
-//        mDatabase.delete(...)
-
-
-
-//        if (itemsDB.size()>0) {
-//            itemsDB.remove(itemsDB.size() - 1);
-//        this.setChanged();
-//        notifyObservers();
-//        }
-    }
 
 //    we need item.getId().toString()
     public void deleteItemFromDb(String id) {

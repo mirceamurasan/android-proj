@@ -49,12 +49,11 @@
             android:layout_height="wrap_content"
             android:text="Add more items" />
 
-        <Spinner
-            android:id="@+id/my_spinner_from_fragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-        </Spinner>
+<!--        <Spinner-->
+<!--            android:id="@+id/my_spinner_from_fragment"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content">-->
+<!--        </Spinner>-->
     </LinearLayout>
 
 
